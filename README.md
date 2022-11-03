@@ -1,3 +1,5 @@
+Laravel Job finder Website
+
 The functionality of the website:
 - the user can register, log in, and change the password.
 Main page: 
