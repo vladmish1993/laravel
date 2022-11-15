@@ -7,7 +7,7 @@ Main page:
 Each vacancy has a detailed page where you can apply. After applying, the vacancy appears on the main page in the section "Your applications".
 Profile editing - validations added, for text - from 100 to 5000 characters, for resume - PDF format and size up to 10Mb.
 There are also multiple additions of user skills. These skills are supposed to sort vacancies for a specific user (not implemented at the moment).
-The user with the email address admin@admin.com (specified in the .env file) is the admin by default and has an additional button in the personal account - "add a vacancy".
+The user can register as an employee and as a emlpoyer as well. There are two different UI: the employee can apply to the job, and the employey can create a new jobs and track the employee's applications.
 /job/create - adding a new job. It is possible to specify the Title, Company name, salary, and job description and select the necessary skills.
 A factory has been developed to generate vacancies:
 php artisan tinker
