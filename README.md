@@ -1,21 +1,48 @@
-Laravel Job finder Website
+# Laravel Job finder Website
 
-The functionality of the website:
-- the user can register, log in, and change the password.
+## The functionality of the website:
+The user can register as an employee and as an emlpoyer as well, log in and change the password. https://prnt.sc/-uf5fSw3Xspt  
+
+### For employee  
 Main page: 
-- the list of vacancies is available only if the user has filled in the phone number and cover letter and uploaded a resume. Also, the list of vacancies has pagination.
-Each vacancy has a detailed page where you can apply. After applying, the vacancy appears on the main page in the section "Your applications".
-Profile editing - validations added, for text - from 100 to 5000 characters, for resume - PDF format and size up to 10Mb.
-There are also multiple additions of user skills. These skills are supposed to sort vacancies for a specific user (not implemented at the moment).
-The user with the email address admin@admin.com (specified in the .env file) is the admin by default and has an additional button in the personal account - "add a vacancy".
-/job/create - adding a new job. It is possible to specify the Title, Company name, salary, and job description and select the necessary skills.
-A factory has been developed to generate vacancies:
-php artisan tinker
-\App\Models\Job::factory()->create();
-The method will create a vacancy with all fields filled in.
+The list of vacancies is available only if the user has filled in the phone number, cover letter and uploaded a resume.  
+Also, the list of vacancies has pagination.  
+Each vacancy has a detailed page where every user can apply. After applying, the vacancy appears on the main page in the section "Your applications".  
+https://prnt.sc/lcvTm0Q359nv  
+https://prnt.sc/TGm_sdyuXinS  
 
-To download the CV, I created a symbolic link to the storage/app/public/profile folder
-Controllers - app/Http/Controllers
-Models - app/Models
-Migrations - database/migrations
-Routing - routes/web.php
+Profile editing - validations added:  
+for text - from 100 to 5000 characters,  
+for CV - PDF format and size up to 10Mb.  
+There are multiple additions of user skills also. These skills are supposed to sort vacancies for a specific user on the main page.  
+https://prnt.sc/W-cCNL_NdGbo  
+https://prnt.sc/YU_4YChtbyhg  
+
+### For employer   
+The employer can create a new jobs,  
+Track the employee's applications, approve or decline them with feedback comment. (In progress)  
+
+Main page: 
+https://prnt.sc/pcbM5oyPQQhE  
+
+Profile:  
+https://prnt.sc/Sku8TsUkBsgf  
+https://prnt.sc/1KkOc4AsDnkS
+The company name in the vacancies shows from employer profile who did create it.
+
+Adding a new job. It is possible to specify the Title, salary, job description, and select the necessary skills.  
+https://prnt.sc/9pNrbVswQdzO  
+https://prnt.sc/UzQNMBs7HqPR
+
+___
+
+A factories and DB seeder has been developed to generate users with skills and jobs:  
+php artisan db:seed
+
+To download the CV, I created a symbolic link to the storage/app/public/profile folder  
+Controllers - app/Http/Controllers  
+Models - app/Models  
+Policies (for protect creating jobs from non-employer users) - app/Policies
+Factories - database/factories
+Migrations - database/migrations  
+Routing - routes/web.php  
