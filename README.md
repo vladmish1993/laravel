@@ -7,7 +7,7 @@ The user can register as employee or employer, log in, and change the password. 
 Main page: 
 The list of vacancies is available only if the user has filled in the phone number and cover letter and uploaded a resume.  
 Also, the list of vacancies has pagination.  
-Each vacancy has a detailed page where you can apply. After applying, the vacancy appears on the main page in the section "Your applications".  
+Each vacancy has a detailed page where user can apply. After applying, the vacancy appears on the main page in the section "Your applications".  
 https://prnt.sc/lcvTm0Q359nv  
 https://prnt.sc/TGm_sdyuXinS  
 
