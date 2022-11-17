@@ -3,10 +3,13 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Profile;
+use App\Models\Job;
 use App\Models\Skills;
 
-class ProfileSkillsFactory extends Factory
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\JobSkills>
+ */
+class JobSkillsFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,8 +19,8 @@ class ProfileSkillsFactory extends Factory
     public function definition()
     {
         return [
-            'profile_id' => Profile::factory(),
-            'skills_id' => Skills::all()->random()
+            'job_id' => Job::factory(),
+            'skills_id' => Skills::all()->unique()->random()
         ];
     }
 }

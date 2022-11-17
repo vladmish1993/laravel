@@ -13,11 +13,10 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet"/>
-    <script src="{{ asset('/js/app.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -82,6 +81,8 @@
     </nav>
 
     <main class="py-4">
+        @include('flash-message')
+
         @yield('content')
     </main>
 </div>

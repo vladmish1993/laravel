@@ -34,6 +34,13 @@
                                         <div class="card-text pb-2">
                                             {{ $job->description }}
                                         </div>
+
+                                        <div class="pb-2">
+                                            @foreach($job->skills as $jobSkill)
+                                                <span class="badge badge-success">{{ $jobSkill->skills->name }}</span>
+                                            @endforeach
+                                        </div>
+
                                         <a href="/job/{{ $job->id }}" class="card-link">Detail info</a>
                                     </div>
                                 </div>

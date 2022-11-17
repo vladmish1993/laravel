@@ -11,9 +11,29 @@
                     {{ $job->description }}
                 </div>
 
-                <div class="col-md-4">
-                    <button class="btn btn-primary ml-4 apply-button{{$applied ? ' disabled' : ''}}" data-job-id="{{ $job->id }}" data-apply="{{ $applied }}">{{$applied ? 'Already applied' : 'Apply'}}</button>
+                <div class="pb-2">
+                    @foreach($job->skills as $jobSkill)
+                        <span class="badge badge-success">{{ $jobSkill->skills->name }}</span>
+                    @endforeach
                 </div>
+
+                @can('update', $job)
+                    <div class="row pt-2">
+                        <div class="col-md-3">
+                            <a class="btn btn-success" href="/job/{{$job->id}}/edit">Edit job</a>
+                        </div>
+
+                        <form class="col-md-3" action="{{ route('job.destroy', $job->id) }}" method="POST">
+                            {{ method_field('DELETE') }}
+                            {{ csrf_field() }}
+                            <button class="btn btn-danger">Delete job</button>
+                        </form>
+                    </div>
+                @else
+                    <div class="col-md-4">
+                        <apply-button job-id="{{ $job->id }}" applied="{{ $applied }}"></apply-button>
+                    </div>
+                @endcan
             </div>
         </div>
     </div>

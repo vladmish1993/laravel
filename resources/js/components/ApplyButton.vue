@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button class="btn btn-primary ml-4" @click="applyToJob" v-text="buttonText"></button>
+        <button class="btn btn-primary ml-4" @click="applyToJob" v-text="buttonText" :disabled="buttonDisabled"></button>
     </div>
 </template>
 
@@ -20,7 +20,6 @@
                 axios.post('/apply/' + this.jobId)
                     .then(response => {
                         this.status = ! this.status;
-                        console.log(response.data);
                     })
                     .catch(errors => {
                         if (errors.response.status == 401) {
@@ -31,7 +30,11 @@
         },
         computed: {
             buttonText() {
-                return (this.status) ? 'Not Applied' : 'Applied';
+                return (this.status) ? 'Already applied' : 'Apply';
+            },
+
+            buttonDisabled(){
+                return (this.status) ? true : false;
             }
         }
     }

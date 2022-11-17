@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Profile;
 use App\Models\Skills;
 use App\Models\ProfileSkills;
 use Illuminate\Http\Request;
@@ -17,22 +18,24 @@ class ProfilesController extends Controller
      */
     public function index(User $user)
     {
-        $admin_email = env('ADMIN_EMAIL', 'test@test.com');
-        if($user->email == $admin_email)
+        //Employer can see all profiles
+        if(!auth()->user()->is_employer)
         {
-            $user['is_admin'] = true;
-        }
+            //User can see only own profile
+            $this->authorize('view', $user->profile);
 
-        //Gathering user skills in string
-        if($user->profile->skills)
-        {
-            $user_skills = [];
-            foreach ($user->profile->skills as $user_skill)
+            //Gathering user skills in string
+            if($user->profile->skills)
             {
-                $user_skills[] = $user_skill->skills->name;
+                $user_skills = [];
+
+                foreach ($user->profile->skills as $user_skill)
+                {
+                    $user_skills[] = $user_skill->skills->name;
+                }
+                $user_skill_str = implode(', ', $user_skills);
+                $user['user_skills_str'] = $user_skill_str;
             }
-            $user_skill_str = implode(', ', $user_skills);
-            $user['user_skills_str'] = $user_skill_str;
         }
 
         return view('profiles.index')->with('user', $user);
@@ -58,40 +61,53 @@ class ProfilesController extends Controller
         //Check if user allowed to update profile
         $this->authorize('update', $user->profile);
 
-        //validate data
-        //['required', 'unique:posts', 'max:255'],
-        $data = request()->validate([
-            'phone' => 'required|string|min:11|max:255',
-            'cover_letter' => 'required|string|min:100|max:5000',
-            'cv' => 'required|mimes:pdf|max:10000',
-            'skills' => ''
-        ]);
-
-        if (request('cv')) {
-            $imagePath = request('cv')->store('profile', 'public');
-            $fileArray = ['cv' => $imagePath];
-        }
-
-        $skills = $data['skills'];
-        unset($data['skills']);
-
-        auth()->user()->profile->update(array_merge(
-            $data,
-            $fileArray ?? []
-        ));
-
-        //save skills
-        if(!empty($skills))
+        if(auth()->user()->is_employer)
         {
-            //Clear existing skills
-            auth()->user()->profile->skills()->delete();
+            //validate data
+            $data = request()->validate([
+                'phone' => 'required|string|min:11|max:255',
+                'company_name' => 'required|string|min:2|max:255',
+            ]);
 
-            foreach ($skills as $skill_id)
+            $data['show_phone'] = request('show_phone') ? true : false;
+            auth()->user()->profile->update($data);
+        }
+        else
+        {
+            //validate data
+            $data = request()->validate([
+                'phone' => 'required|string|min:11|max:255',
+                'cover_letter' => 'required|string|min:100|max:5000',
+                'cv' => 'mimes:pdf|max:10000',
+                'skills' => ''
+            ]);
+
+            if (request('cv')) {
+                $imagePath = request('cv')->store('profile', 'public');
+                $fileArray = ['cv' => $imagePath];
+            }
+
+            $skills = $data['skills'];
+            unset($data['skills']);
+
+            auth()->user()->profile->update(array_merge(
+                $data,
+                $fileArray ?? []
+            ));
+
+            //save skills
+            if(!empty($skills))
             {
-                auth()->user()->profile->skills()->create([
-                    'profile_id' => auth()->user()->profile->id,
-                    'skills_id' => $skill_id,
-                ]);
+                //Clear existing skills
+                auth()->user()->profile->skills()->delete();
+
+                foreach ($skills as $skill_id)
+                {
+                    auth()->user()->profile->skills()->create([
+                        'profile_id' => auth()->user()->profile->id,
+                        'skills_id' => $skill_id,
+                    ]);
+                }
             }
         }
 

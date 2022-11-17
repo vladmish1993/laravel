@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Job;
-use App\Models\Skills;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,10 +21,10 @@ class JobFactory extends Factory
     {
         return [
             'title' => fake()->jobTitle(),
-            'company' => fake()->company(),
             'salary' => fake()->numberBetween(35000, 50000),
             'description' => fake()->text(),
-            'created_at' => now()
+            'created_at' => now(),
+            'created_by' => \App\Models\User::all()->random()
         ];
     }
 }

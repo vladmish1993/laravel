@@ -1,0 +1,84 @@
+.nav-link
+{
+    margin-right: .5rem;
+}
+
+.icon-big
+{
+    font-size: 35px;
+    color: #189527;
+    padding-right: 20px;
+}
+
+.card-section-header
+{
+    font-size: 25px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, .175);
+}
+
+.card-block {
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+
+.card-title
+{
+    margin-bottom: 0;
+}
+
+.card-company
+{
+    font-size: 18px;
+}
+
+.card-salary
+{
+    padding-bottom: 1rem;
+}
+
+.profile_titles
+{
+    font-weight: bold;
+}
+
+.card
+{
+    width: 100%;
+}
+
+.card-block {
+    min-height: 220px;
+}
+
+.card-text {
+    height: 75px;
+    overflow: hidden;
+}
+
+.hidden {
+    display: none!important;
+}
+
+.badge-success
+{
+    background-color: #28a745;
+    margin-right: 3px;
+}
+
+.alert-block
+{
+    display: flex;
+    align-items: center;
+}
+
+.alert-block .btn-close
+{
+    margin-right: 15px;
+}
+
+.alert-block strong
+{
+    font-size: 17px;
+}

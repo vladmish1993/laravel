@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Profile;
+use App\Models\Job;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ProfilePolicy
+class JobPolicy
 {
     use HandlesAuthorization;
 
@@ -25,12 +25,24 @@ class ProfilePolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Profile  $profile
+     * @param  \App\Models\Job  $job
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Profile $profile)
+    public function view(User $user, Job $job)
     {
-        return $user->id == $profile->user_id;
+        if($user->is_employer)
+        {
+            return true;
+        }
+        else
+        {
+            if($user->profile->phone && $user->profile->cover_letter && $user->profile->cv)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -41,41 +53,41 @@ class ProfilePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->is_employer;
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Profile  $profile
+     * @param  \App\Models\Job  $job
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Profile $profile)
+    public function update(User $user, Job $job)
     {
-        return $user->id == $profile->user_id;
+        return $user->is_employer && $job->created_by == $user->id;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Profile  $profile
+     * @param  \App\Models\Job  $job
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Profile $profile)
+    public function delete(User $user, Job $job)
     {
-        //
+        return $user->is_employer && $job->created_by == $user->id;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Profile  $profile
+     * @param  \App\Models\Job  $job
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Profile $profile)
+    public function restore(User $user, Job $job)
     {
         //
     }
@@ -84,10 +96,10 @@ class ProfilePolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Profile  $profile
+     * @param  \App\Models\Job  $job
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Profile $profile)
+    public function forceDelete(User $user, Job $job)
     {
         //
     }

@@ -26,39 +26,62 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
-                                <label for="cover_letter" class="col-md-4 col-form-label text-md-end">Cover Letter</label>
+                            @if($user->is_employer)
+                                <div class="row mb-3">
+                                    <label for="company_name" class="col-md-4 col-form-label text-md-end">Company name</label>
 
-                                <div class="col-md-6">
-                                    <textarea id="cover_letter" name="cover_letter" type="text" class="form-control @error('cover_letter') is-invalid @enderror" rows="4" cols="50" required>{{ old('cover_letter') ?? $user->profile->cover_letter }}</textarea>
+                                    <div class="col-md-6">
+                                        <input id="company_name" type="text" class="form-control @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name') ?? $user->profile->company_name }}" required autofocus>
 
-                                    @error('cover_letter')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                        @error('company_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="row mb-3">
-                                <label for="email" class="col-md-4 col-form-label text-md-end">CV (only PDF accepted)</label>
+                                <div class="row mb-3">
+                                    <label for="show_phone" class="col-md-4 col-form-label text-md-end">Show phone in jobs</label>
 
-                                <div class="col-md-6">
-                                    <input type="file" class="form-control @error('cv') is-invalid @enderror" id="cv" name="cv">
-
-                                    @error('cv')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                    <div class="col-md-6">
+                                        <input id="show_phone" type="checkbox" class="form-check-input" name="show_phone" {{ $user->profile->show_phone ? 'checked="checked"' : '' }} autofocus>
+                                    </div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="row mb-3">
+                                    <label for="cover_letter" class="col-md-4 col-form-label text-md-end">Cover Letter</label>
 
-                            <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <textarea id="cover_letter" name="cover_letter" type="text" class="form-control @error('cover_letter') is-invalid @enderror" rows="4" cols="50" required>{{ old('cover_letter') ?? $user->profile->cover_letter }}</textarea>
+
+                                        @error('cover_letter')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="email" class="col-md-4 col-form-label text-md-end">CV (only PDF accepted)</label>
+
+                                    <div class="col-md-6">
+                                        <input type="file" class="form-control @error('cv') is-invalid @enderror" id="cv" name="cv">
+
+                                        @error('cv')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
                                 <label for="skills[]" class="col-md-4 col-form-label text-md-end">Skills</label>
 
                                 <div class="col-md-6">
-                                    <select id="skills[]" name="skills[]" type="text" class="form-control @error('skills') is-invalid @enderror" multiple required>
+                                    <select id="skills[]" name="skills[]" class="form-control @error('skills') is-invalid @enderror" multiple required>
                                         @foreach ($available_skills as $skill)
                                             <option value="{{ $skill->id }}"
                                                 @foreach ($user->profile->skills as $user_skill)
@@ -78,6 +101,7 @@
                                     @enderror
                                 </div>
                             </div>
+                            @endif
 
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">

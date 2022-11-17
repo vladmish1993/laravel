@@ -13,4 +13,9 @@ class Skills extends Model
     {
         return $this->hasMany(ProfileSkills::class);
     }
+
+    public function jobskills()
+    {
+        return $this->hasMany(JobSkills::class);
+    }
 }

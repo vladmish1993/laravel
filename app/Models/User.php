@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Traits\CreatedUpdatedBy;
 
 class User extends Authenticatable
 {
@@ -22,6 +23,7 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'is_employer',
     ];
 
     /**
@@ -55,15 +57,21 @@ class User extends Authenticatable
         });
     }
 
-    //get all jobs which user applied on
-    public function applied()
+    //Get all User Jobs
+    public function jobs()
     {
-        return $this->belongsToMany(Job::class);
+        return $this->hasMany(Job::class, 'created_by');
     }
 
     //Connection between User and his profile
     public function profile()
     {
         return $this->hasOne(Profile::class);
+    }
+
+    //get all jobs which user applied on
+    public function applied()
+    {
+        return $this->belongsToMany(Job::class);
     }
 }

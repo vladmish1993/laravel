@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->text('cover_letter')->nullable();
             $table->string('cv')->nullable();
+            $table->string('company_name')->nullable();
+            $table->boolean('show_phone')->nullable();
             $table->timestamps();
 
             $table->index('user_id');

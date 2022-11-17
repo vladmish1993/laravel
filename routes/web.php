@@ -3,35 +3,36 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 
-
 /*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
+    HTTP Methods
+    GET - Request a resource
+    POST - Create a new resource
+    PUT - Update a resource (Update whole row)
+    PATCH - Modify a resource (Update only changed values)
+    DELETE - Delete a resource
+    OPTIONS - Ask the server which verbs are allowed
 */
-
-
-//Home
-//Route::get('/', [HomeController::class, 'index'])->name('home');
 
 //All methods after this will require an authorization
 Auth::routes();
 
-//Jobs
+//Apply
 Route::post('apply/{job}', [Controllers\ApplyController::class, 'store'])->name('job.store');
 
-Route::get('/', 'JobsController@index');
+//Accept
+//Route::post('applycallback/{apply}', [Controllers\ApplicationController::class, 'store'])->name('job.store');
 
-Route::get('/', [Controllers\JobsController::class, 'index'])->name('job.show');
+//Home
+Route::get('/', Controllers\HomeController::class);
+
+//Job
+//Route::get('/', [Controllers\JobsController::class, 'index'])->name('job.show');
 Route::get('/job/create', [Controllers\JobsController::class, 'create'])->name('job.create');
 Route::post('/job', [Controllers\JobsController::class, 'store'])->name('job.store');
+Route::get('/job/{job}/edit', [Controllers\JobsController::class, 'edit'])->name('job.edit');
+Route::patch('/job/{job}', [Controllers\JobsController::class, 'update'])->name('job.update');
 Route::get('/job/{job}', [Controllers\JobsController::class, 'show'])->name('job.show');
-
+Route::delete('/job/{id}', [Controllers\JobsController::class, 'destroy'])->name('job.destroy');
 
 //Profile
 Route::get('/member/{user}', [Controllers\ProfilesController::class, 'index'])->name('profile.show');
