@@ -1,7 +1,7 @@
 # Laravel Job finder Website
 
 ## The functionality of the website:
-The user can register as employee or employer, log in, and change the password. https://prnt.sc/-uf5fSw3Xspt  
+The user can register as an employee and as a emlpoyer as well, log in, and change the password. https://prnt.sc/-uf5fSw3Xspt  
 
 ### For employee  
 Main page: 
@@ -11,9 +11,10 @@ Each vacancy has a detailed page where user can apply. After applying, the vacan
 https://prnt.sc/lcvTm0Q359nv  
 https://prnt.sc/TGm_sdyuXinS  
 
-Profile editing - validations added, for text - from 100 to 5000 characters, for resume - PDF format and size up to 10Mb.  
-There are also multiple additions of user skills. These skills are supposed to sort vacancies for a specific user (not implemented at the moment).  
-The user can register as an employee and as a emlpoyer as well. 
+Profile editing - validations added:  
+for text - from 100 to 5000 characters, 
+for cv - PDF format and size up to 10Mb.  
+There are also multiple additions of user skills. These skills are supposed to sort vacancies for a specific user.  
 https://prnt.sc/W-cCNL_NdGbo  
 https://prnt.sc/YU_4YChtbyhg  
 
