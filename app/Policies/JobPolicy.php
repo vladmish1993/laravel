@@ -75,9 +75,9 @@ class JobPolicy
      * @param  \App\Models\Job  $job
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Job $job)
+    public function delete(User $user)
     {
-        return $user->is_employer && $job->created_by == $user->id;
+        return $user->is_employer;
     }
 
     /**

@@ -33,7 +33,8 @@
 
                                             <div class="card-company text-muted font-weight-bold">{{ $job->creator->profile->company_name }}</div>
                                             @if($job->creator->profile->show_phone)
-                                                <div class="text-muted">Contact phone: {{ $job->creator->profile->phone }}</div>
+                                                <div class="text-muted">Contact
+                                                    phone: {{ $job->creator->profile->phone }}</div>
                                             @endif
                                             <div class="card-salary pb-2 text-muted">£{{ $job->salary }}</div>
                                             <div class="card-text pb-2">
@@ -71,68 +72,72 @@
 
                 @if($allowedToView)
                     <div class="row">
-                        @if($jobs->isNotEmpty())
-                            @foreach($jobs as $job)
-                                @if($job->applications->count() > 0)
-                                    @foreach($job->applications as $jobApplication)
-                                        <div class="col-lg-4 d-flex align-items-stretch">
-                                            <div class="card mb-4">
-                                                <div class="card-block">
-                                                    <h4 class="card-title"><a href="/job/{{ $job->id }}">{{ $job->title }}</a></h4>
+                        @if($applications->isNotEmpty())
+                            @foreach($applications as $jobApplication)
+                                <div class="col-lg-4 d-flex align-items-stretch">
+                                    <div class="card mb-4">
+                                        <div class="card-block">
+                                            <h4 class="card-title">
+                                                <a href="/job/{{ $jobApplication->job->id }}">{{ $jobApplication->job->title }}</a>
+                                            </h4>
 
-                                                    <div class="card-company text-muted font-weight-bold">{{ $job->creator->profile->company_name }}</div>
-                                                    @if($job->creator->profile->show_phone)
-                                                        <div class="text-muted">Contact phone: {{ $job->creator->profile->phone }}</div>
-                                                    @endif
-                                                    <div class="card-salary pb-2 text-muted">£{{ $job->salary }}</div>
-                                                    <div class="card-text pb-2">
-                                                        {{ $job->description }}
-                                                    </div>
+                                            <div class="card-company text-muted font-weight-bold">{{ $jobApplication->job->creator->profile->company_name }}</div>
+                                            @if($jobApplication->job->creator->profile->show_phone)
+                                                <div class="text-muted">Contact phone: {{ $jobApplication->job->creator->profile->phone }}</div>
+                                            @endif
+                                            <div class="card-salary pb-2 text-muted">£{{ $jobApplication->job->salary }}</div>
+                                            <div class="card-text pb-2">
+                                                {{ $jobApplication->job->description }}
+                                            </div>
 
-                                                    <div class="pb-2">
-                                                        @foreach($job->skills as $jobSkill)
-                                                            <span class="badge badge-success">{{ $jobSkill->skills->name }}</span>
-                                                        @endforeach
-                                                    </div>
+                                            <div class="pb-2">
+                                                @foreach($jobApplication->job->skills as $jobSkill)
+                                                    <span class="badge badge-success">{{ $jobSkill->skills->name }}</span>
+                                                @endforeach
+                                            </div>
 
-                                                    <hr>
+                                            <hr>
 
-                                                    <div class="row pb-3">
-                                                        <div class="col-md-4 profile_titles">Candidate</div>
-                                                        <div class="col-md-8">{{$jobApplication->user->first_name}} {{$jobApplication->user->last_name}}</div>
-                                                    </div>
-                                                    <div class="row pb-3">
-                                                        <div class="col-md-4 profile_titles">Phone</div>
-                                                        <div class="col-md-8">{{ $jobApplication->user->profile->phone}}</div>
-                                                    </div>
-                                                    <div class="row pb-3">
-                                                        <div class="col-md-4 profile_titles">Cover Letter</div>
-                                                        <div class="col-md-8">{{ $jobApplication->user->profile->cover_letter}}</div>
-                                                    </div>
-                                                    <div class="row pb-3">
-                                                        <div class="col-md-4 profile_titles">CV</div>
-                                                        <div class="col-md-8"><a
-                                                                    href="/storage/{{ $jobApplication->user->profile->cv }}"
-                                                                    target="_blank">Download</a></div>
-                                                    </div>
-                                                    <div class="row pb-3">
-                                                        <div class="col-md-4 profile_titles">Skills</div>
-                                                        <div class="col-md-8">
-                                                            @foreach($jobApplication->user->profile->skills as $candidateSkill)
-                                                                <span class="badge badge-success">{{ $candidateSkill->skills->name }}</span>
-                                                            @endforeach
-                                                        </div>
-                                                    </div>
-                                                    <application-buttons application-id="{{ $jobApplication->id }}"></application-buttons>
+                                            <div class="row pb-3">
+                                                <div class="col-md-4 profile_titles">Candidate</div>
+                                                <div class="col-md-8">{{$jobApplication->user->first_name}} {{$jobApplication->user->last_name}}</div>
+                                            </div>
+                                            <div class="row pb-3">
+                                                <div class="col-md-4 profile_titles">Phone</div>
+                                                <div class="col-md-8">{{ $jobApplication->user->profile->phone}}</div>
+                                            </div>
+                                            <div class="row pb-3">
+                                                <div class="col-md-4 profile_titles">Cover Letter</div>
+                                                <div class="col-md-8">{{ $jobApplication->user->profile->cover_letter}}</div>
+                                            </div>
+                                            <div class="row pb-3">
+                                                <div class="col-md-4 profile_titles">CV</div>
+                                                <div class="col-md-8"><a
+                                                            href="/storage/{{ $jobApplication->user->profile->cv }}"
+                                                            target="_blank">Download</a></div>
+                                            </div>
+                                            <div class="row pb-3">
+                                                <div class="col-md-4 profile_titles">Skills</div>
+                                                <div class="col-md-8">
+                                                    @foreach($jobApplication->user->profile->skills as $candidateSkill)
+                                                        <span class="badge badge-success">{{ $candidateSkill->skills->name }}</span>
+                                                    @endforeach
                                                 </div>
                                             </div>
+                                            <application-buttons application-id="{{ $jobApplication->id }}"></application-buttons>
                                         </div>
-                                    @endforeach
-                                @endif
+                                    </div>
+                                </div>
                             @endforeach
                         @else
                             <div>There is nothing</div>
                         @endif
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            {{ $applications->links() }}
+                        </div>
                     </div>
                 @else
                     <div class="h4 text-danger">Please complete your profile to be able to add the new job!</div>

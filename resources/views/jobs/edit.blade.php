@@ -88,7 +88,7 @@
                             </div>
                         </form>
                         <div class="pt-2">
-                            <a href="/" class="card-link">Back to job list</a>
+                            <a href="/job/{{$job->id}}" class="card-link">Back to job</a>
                         </div>
                     </div>
                 </div>

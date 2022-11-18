@@ -27,8 +27,15 @@
                 @if($notifications->isNotEmpty())
                     @foreach($notifications as $notification)
                         <div class="col-lg-4 d-flex align-items-stretch">
-                            <div class="card mb-4 @if($notification->status) notification-success @else notification-unsuccess @endif">
+                            <div class="card mb-4">
                                 <div class="card-block">
+
+                                    @if($notification->status === "0")
+                                        <span class="job-badge badge badge-danger">Unsuccess</span>
+                                    @elseif($notification->status === "1")
+                                        <span class="job-badge badge badge-success">Success</span>
+                                    @endif
+
                                     <h4 class="card-title">{{ $notification->job->title }}</h4>
                                     <div class="card-company text-muted font-weight-bold">{{ $notification->job->company }}</div>
                                     @if($notification->job->creator->profile->show_phone)

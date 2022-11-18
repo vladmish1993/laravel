@@ -26,10 +26,23 @@ class Job extends Model
         'description'
     ];
 
+    //Events when job is deleting
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($job) {
+            //delete skills
+            $job->skills()->delete();
+            //delete applications
+            $job->applications()->delete();
+        });
+    }
+
     //All users which applied to this job
     public function applications()
     {
-        return $this->hasMany(Application::class)->where('status', null);
+        return $this->hasMany(Application::class);
     }
 
     //Get job's creator

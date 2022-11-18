@@ -80,18 +80,16 @@ class User extends Authenticatable
         return $this->hasMany(Application::class)->where('viewed', false);
     }
 
-
+    //Get all applications on User's jobs
     public function allEmployerApplication()
     {
-        //return $this->hasMany(Application::class);
-
         return $this->hasManyThrough(
             Application::class,
             Job::class,
-            'user_id', // Foreign key on the Job table...
-            'id', // Foreign key on the application table...
-            'job_id', // Local key on the users table...
-            'id' // Local key on the application table...
-        );
+            'created_by', // Foreign key on the Job table
+            'job_id', // Foreign key on the application table
+            'id', // Local key on the users table
+            'id' // Local key on the job table
+        )->where('status', null);
     }
 }

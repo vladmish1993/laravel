@@ -41,8 +41,9 @@ class HomeController extends Controller
             }
 
             //Get Jobs by User
-            $jobs = Job::where('created_by', $user->id)->latest()->paginate(6);
-            return view('index_admin', compact('profile', 'allowedToView', 'jobs'));
+            $jobs = Job::where('created_by', $user->id)->latest()->paginate(6, ['*'], 'jobs_page');
+            $applications = $user->allEmployerApplication()->latest()->paginate(6, ['*'], 'applications_page');
+            return view('index_admin', compact('jobs', 'applications', 'allowedToView'));
         }
         else
         {
@@ -67,7 +68,7 @@ class HomeController extends Controller
             })->latest()->paginate(6, ['*'], 'rec_jobs_page');
 
             //Get user applications
-            $applications = $user->applied()->paginate(6, ['*'], 'applications_page');
+            $applications = $user->applied()->latest()->paginate(6, ['*'], 'applications_page');
             return view('index', compact('profile','allowedToView',  'jobs', 'applications'));
         }
     }

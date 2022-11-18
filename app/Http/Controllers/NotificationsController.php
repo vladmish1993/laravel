@@ -27,7 +27,7 @@ class NotificationsController extends Controller
     {
         //get the authorizer user
         $user = auth()->user();
-        $notifications = $user->notifications()->paginate(12, ['*'], 'notifications_page');
+        $notifications = $user->notifications()->paginate(6, ['*'], 'notifications_page');
         return view('notifications.index', compact('user', 'notifications'));
     }
 }
