@@ -6,6 +6,9 @@
             <div class="card col-md-9 p-3">
                 <h4 class="card-title">{{ $job->title }}</h4>
                 <div class="card-company text-muted font-weight-bold">{{ $job->company }}</div>
+                @if($job->creator->profile->show_phone)
+                    <div class="text-muted">Contact phone: {{ $job->creator->profile->phone }}</div>
+                @endif
                 <div class="card-salary pb-2 text-muted">£{{ $job->salary }}</div>
                 <div class="pb-2">
                     {{ $job->description }}
@@ -34,6 +37,10 @@
                         <apply-button job-id="{{ $job->id }}" applied="{{ $applied }}"></apply-button>
                     </div>
                 @endcan
+
+                <div class="pt-2">
+                    <a href="/" class="card-link">Back to job list</a>
+                </div>
             </div>
         </div>
     </div>

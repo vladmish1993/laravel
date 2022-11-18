@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
+use App\Models\User;
+use App\Models\Application;
+
 use App\Traits\CreatedUpdatedBy;
 
 class Job extends Model
@@ -23,9 +27,9 @@ class Job extends Model
     ];
 
     //All users which applied to this job
-    public function candidates()
+    public function applications()
     {
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(Application::class)->where('status', null);
     }
 
     //Get job's creator

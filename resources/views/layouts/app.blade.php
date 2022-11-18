@@ -56,6 +56,17 @@
                         </li>
                     @endif
                     @else
+                        @if (!Auth::user()->is_employer)
+                            <div class="notify-block">
+                                <a href="/notifications">
+                                    <i class="fa-solid fa fa-bell-o icon-medium"></i>
+                                    @if (Auth::user()->notifications)
+                                        <div class="notifications-circle">{{Auth::user()->notifications->count()}}</div>
+                                    @endif
+                                </a>
+                            </div>
+                        @endif
+
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

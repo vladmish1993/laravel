@@ -78,29 +78,29 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                <label for="skills[]" class="col-md-4 col-form-label text-md-end">Skills</label>
+                                    <label for="skills[]" class="col-md-4 col-form-label text-md-end">Skills</label>
 
-                                <div class="col-md-6">
-                                    <select id="skills[]" name="skills[]" class="form-control @error('skills') is-invalid @enderror" multiple required>
-                                        @foreach ($available_skills as $skill)
-                                            <option value="{{ $skill->id }}"
-                                                @foreach ($user->profile->skills as $user_skill)
-                                                    @if ($user_skill->skills_id == $skill->id)
-                                                        {{'selected="selected"'}}
-                                                    @endif
-                                                @endforeach>
-                                                {{ $skill->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    <div class="col-md-6">
+                                        <select id="skills[]" name="skills[]" class="form-control @error('skills') is-invalid @enderror" multiple required>
+                                            @foreach ($available_skills as $skill)
+                                                <option value="{{ $skill->id }}"
+                                                    @foreach ($user->profile->skills as $user_skill)
+                                                        @if ($user_skill->skills_id == $skill->id)
+                                                            {{'selected="selected"'}}
+                                                        @endif
+                                                    @endforeach>
+                                                    {{ $skill->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
 
-                                    @error('skills')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                        @error('skills')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
                             @endif
 
                             <div class="row mb-0">
@@ -111,6 +111,10 @@
                                 </div>
                             </div>
                         </form>
+
+                        <div class="pt-2">
+                            <a href="/" class="card-link">Back to job list</a>
+                        </div>
                     </div>
                 </div>
             </div>

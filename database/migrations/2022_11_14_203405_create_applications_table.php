@@ -15,8 +15,15 @@ return new class extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-
+            $table->unsignedBigInteger('job_id');
+            $table->unsignedBigInteger('user_id');
+            $table->boolean('status')->nullable();
+            $table->text('comment')->nullable();
+            $table->boolean('viewed')->nullable();
             $table->timestamps();
+
+            $table->index('job_id');
+            $table->index('user_id');
         });
     }
 

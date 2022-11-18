@@ -43,7 +43,7 @@
                                 <label for="description" class="col-md-4 col-form-label text-md-end">Description</label>
 
                                 <div class="col-md-6">
-                                    <textarea id="description" name="description" type="text" class="form-control @error('description') is-invalid @enderror" rows="4" cols="50" required>{{ old('description') }}</textarea>
+                                    <textarea id="description" name="description" class="form-control @error('description') is-invalid @enderror" rows="4" cols="50" required>{{ old('description') }}</textarea>
 
                                     @error('description')
                                     <span class="invalid-feedback" role="alert">
@@ -57,7 +57,7 @@
                                 <label for="skills[]" class="col-md-4 col-form-label text-md-end">Required Skills</label>
 
                                 <div class="col-md-6">
-                                    <select id="skills[]" name="skills[]" type="text" class="form-control @error('skills') is-invalid @enderror" multiple required>
+                                    <select id="skills[]" name="skills[]" class="form-control @error('skills') is-invalid @enderror" multiple required>
                                         @foreach ($available_skills as $skill)
                                             <option value="{{ $skill->id }}">
                                                 {{ $skill->name }}
@@ -81,6 +81,9 @@
                                 </div>
                             </div>
                         </form>
+                        <div class="pt-2">
+                            <a href="/" class="card-link">Back to job list</a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -22,7 +22,7 @@
                     <div class="card-section-text">My jobs</div>
                 </div>
 
-                @if($profile->phone && $profile->company_name)
+                @if($allowedToView)
                     <div class="row">
                         @if($jobs->isNotEmpty())
                             @foreach($jobs as $job)
@@ -32,6 +32,9 @@
                                             <h4 class="card-title">{{ $job->title }}</h4>
 
                                             <div class="card-company text-muted font-weight-bold">{{ $job->creator->profile->company_name }}</div>
+                                            @if($job->creator->profile->show_phone)
+                                                <div class="text-muted">Contact phone: {{ $job->creator->profile->phone }}</div>
+                                            @endif
                                             <div class="card-salary pb-2 text-muted">£{{ $job->salary }}</div>
                                             <div class="card-text pb-2">
                                                 {{ $job->description }}
@@ -66,18 +69,21 @@
                     <div class="card-section-text">Applications to your jobs</div>
                 </div>
 
-                @if($profile->phone && $profile->company_name)
+                @if($allowedToView)
                     <div class="row">
                         @if($jobs->isNotEmpty())
                             @foreach($jobs as $job)
-                                @if($job->candidates->count() > 0)
-                                    @foreach($job->candidates as $jobCandidate)
+                                @if($job->applications->count() > 0)
+                                    @foreach($job->applications as $jobApplication)
                                         <div class="col-lg-4 d-flex align-items-stretch">
                                             <div class="card mb-4">
                                                 <div class="card-block">
                                                     <h4 class="card-title"><a href="/job/{{ $job->id }}">{{ $job->title }}</a></h4>
 
                                                     <div class="card-company text-muted font-weight-bold">{{ $job->creator->profile->company_name }}</div>
+                                                    @if($job->creator->profile->show_phone)
+                                                        <div class="text-muted">Contact phone: {{ $job->creator->profile->phone }}</div>
+                                                    @endif
                                                     <div class="card-salary pb-2 text-muted">£{{ $job->salary }}</div>
                                                     <div class="card-text pb-2">
                                                         {{ $job->description }}
@@ -93,39 +99,39 @@
 
                                                     <div class="row pb-3">
                                                         <div class="col-md-4 profile_titles">Candidate</div>
-                                                        <div class="col-md-8">{{$jobCandidate->first_name}} {{$jobCandidate->last_name}}</div>
+                                                        <div class="col-md-8">{{$jobApplication->user->first_name}} {{$jobApplication->user->last_name}}</div>
                                                     </div>
                                                     <div class="row pb-3">
                                                         <div class="col-md-4 profile_titles">Phone</div>
-                                                        <div class="col-md-8">{{ $jobCandidate->profile->phone}}</div>
+                                                        <div class="col-md-8">{{ $jobApplication->user->profile->phone}}</div>
                                                     </div>
                                                     <div class="row pb-3">
                                                         <div class="col-md-4 profile_titles">Cover Letter</div>
-                                                        <div class="col-md-8">{{ $jobCandidate->profile->cover_letter}}</div>
+                                                        <div class="col-md-8">{{ $jobApplication->user->profile->cover_letter}}</div>
                                                     </div>
                                                     <div class="row pb-3">
                                                         <div class="col-md-4 profile_titles">CV</div>
                                                         <div class="col-md-8"><a
-                                                                    href="/storage/{{ $jobCandidate->profile->cv }}"
+                                                                    href="/storage/{{ $jobApplication->user->profile->cv }}"
                                                                     target="_blank">Download</a></div>
                                                     </div>
                                                     <div class="row pb-3">
                                                         <div class="col-md-4 profile_titles">Skills</div>
                                                         <div class="col-md-8">
-                                                            @foreach($jobCandidate->profile->skills as $candidateSkill)
+                                                            @foreach($jobApplication->user->profile->skills as $candidateSkill)
                                                                 <span class="badge badge-success">{{ $candidateSkill->skills->name }}</span>
                                                             @endforeach
                                                         </div>
                                                     </div>
-                                                    <div class="row">
-                                                        <application-buttons application-id="{{ $job->id }}"></application-buttons>
-                                                    </div>
+                                                    <application-buttons application-id="{{ $jobApplication->id }}"></application-buttons>
                                                 </div>
                                             </div>
                                         </div>
                                     @endforeach
                                 @endif
                             @endforeach
+                        @else
+                            <div>There is nothing</div>
                         @endif
                     </div>
                 @else

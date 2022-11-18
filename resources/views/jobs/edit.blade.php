@@ -87,6 +87,9 @@
                                 </div>
                             </div>
                         </form>
+                        <div class="pt-2">
+                            <a href="/" class="card-link">Back to job list</a>
+                        </div>
                     </div>
                 </div>
             </div>

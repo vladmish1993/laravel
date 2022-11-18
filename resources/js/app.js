@@ -15,13 +15,15 @@ const app = new Vue({
 import { createApp } from 'vue'
 import ApplyButton from './components/ApplyButton.vue'
 import ApplicationButtons from './components/ApplicationButtons.vue'
+import ViewNotificationButton from './components/ViewNotificationButton.vue'
 
 //Initialize app
 const app = createApp({})
 
 //Components
 app.component('apply-button', ApplyButton);
-//app.component('application-buttons', ApplicationButtons);
+app.component('application-buttons', ApplicationButtons);
+app.component('view-notification', ViewNotificationButton);
 
 //Mount app
 app.mount('#app');

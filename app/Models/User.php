@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Traits\CreatedUpdatedBy;
 
 class User extends Authenticatable
 {
@@ -72,6 +71,27 @@ class User extends Authenticatable
     //get all jobs which user applied on
     public function applied()
     {
-        return $this->belongsToMany(Job::class);
+        return $this->hasMany(Application::class);
+    }
+
+    //Get feedbacks to user applications
+    public function notifications()
+    {
+        return $this->hasMany(Application::class)->where('viewed', false);
+    }
+
+
+    public function allEmployerApplication()
+    {
+        //return $this->hasMany(Application::class);
+
+        return $this->hasManyThrough(
+            Application::class,
+            Job::class,
+            'user_id', // Foreign key on the Job table...
+            'id', // Foreign key on the application table...
+            'job_id', // Local key on the users table...
+            'id' // Local key on the application table...
+        );
     }
 }

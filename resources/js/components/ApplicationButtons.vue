@@ -1,71 +1,89 @@
 <template>
-    <div class="col-3">
-        <a class="btn btn-success" @click="acceptApplication" :disabled="buttonDisabled">Accept</a>
-    </div>
-    <div class="col-3">
-        <a class="btn btn-danger" @click="declineApplication"  :disabled="buttonDisabled">Decline</a>
+    <div class="row pb-3" v-if="isButtonsVisible">
+        <div class="col-3">
+            <button class="btn btn-success" @click="acceptApplication" :disabled="buttonDisabled">Accept</button>
+        </div>
+        <div class="col-3">
+            <button class="btn btn-danger" @click="declineApplication" :disabled="buttonDisabled">Decline</button>
+        </div>
     </div>
 
-    <div>
-        <b-button v-b-modal.modal-1>Launch demo modal</b-button>
+    <div class="row" v-if="isCommentVisible">
+        <div class="comment-title">Please write a comment below:</div>
+        <label>
+            <textarea class="form-control" rows="4" cols="50" v-model="comment"></textarea>
+        </label>
 
-        <b-modal id="modal-1" title="BootstrapVue">
-            <p class="my-4">Hello from modal!</p>
-        </b-modal>
+        <div class="row pt-2">
+            <div class="col-3">
+                <button class="btn btn-primary" @click="sendApplication" :disabled="buttonSendDisabled">Send</button>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-dark" @click="cancelApplication">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" v-if="isResultVisible">
+        <div class="feedback-title">Feedback has been sent!</div>
     </div>
 </template>
 
 <script>
     export default {
-        props: ['applicationId'],
+        props: ['jobId', 'applicationId'],
         mounted() {
-            console.log('Component mounted.')
+            //console.log('Component mounted.')
         },
         data: function () {
             return {
-                status: this.applicationId,
-                popupActivo: false,
+                status: false,
+                comment: '',
+                isButtonsVisible: true,
+                isCommentVisible: false,
+                isResultVisible: false
             }
         },
         methods: {
+            cancelApplication() {
+                this.status = false;
+                this.isCommentVisible = !this.isCommentVisible;
+                this.comment = '';
+            },
             acceptApplication() {
-                console.log(this.applicationId);
-                /*
-                axios.post('/apply/' + this.jobId)
-                    .then(response => {
-                        this.status = ! this.status;
-                    })
-                    .catch(errors => {
-                        if (errors.response.status == 401) {
-                            window.location = '/login';
-                        }
-                    });
-                    */
+                this.status = true;
+                this.isCommentVisible = !this.isCommentVisible;
             },
             declineApplication() {
-                /*
-                axios.post('/apply/' + this.jobId)
-                    .then(response => {
-                        this.status = ! this.status;
+                this.status = false;
+                this.isCommentVisible = !this.isCommentVisible;
+            },
+            sendApplication() {
+                if (this.comment) {
+                    axios.post('/applicationanswer/' + this.applicationId, {
+                        status: this.status,
+                        comment: this.comment
                     })
-                    .catch(errors => {
-                        if (errors.response.status == 401) {
-                            window.location = '/login';
-                        }
-                    });
-                    */
+                        .then(response => {
+                            this.isCommentVisible = false;
+                            this.isButtonsVisible = false;
+                            this.isResultVisible = true;
+                            this.status = false;
+                        })
+                        .catch(errors => {
+                            if (errors.response.status === 401) {
+                                window.location = '/login';
+                            }
+                        });
+                }
             }
         },
         computed: {
-            acceptButtonText() {
-                //return (this.status) ? 'Already applied' : 'Apply';
-            },
-            declineButtonText() {
-                //return (this.status) ? 'Already applied' : 'Apply';
-            },
-
             buttonDisabled(){
-               // return (this.status) ? true : false;
+                return !!(this.status);
+            },
+            buttonSendDisabled(){
+                return this.comment.length < 5;
             }
         }
     }

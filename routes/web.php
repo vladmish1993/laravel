@@ -17,10 +17,13 @@ use App\Http\Controllers;
 Auth::routes();
 
 //Apply
-Route::post('apply/{job}', [Controllers\ApplyController::class, 'store'])->name('job.store');
+Route::post('apply/{job}', [Controllers\ApplicationController::class, 'store'])->name('application.store');
 
-//Accept
-//Route::post('applycallback/{apply}', [Controllers\ApplicationController::class, 'store'])->name('job.store');
+//Application
+Route::post('applicationanswer/{application}', [Controllers\ApplicationController::class, 'update'])->name('application.store');
+
+//Application viewed
+Route::patch('notificationview/{application}', [Controllers\ApplicationController::class, 'updateView'])->name('application.updateView');
 
 //Home
 Route::get('/', Controllers\HomeController::class);
@@ -39,3 +42,5 @@ Route::get('/member/{user}', [Controllers\ProfilesController::class, 'index'])->
 Route::get('/member/{user}/edit', [Controllers\ProfilesController::class, 'edit'])->name('profile.edit');
 Route::patch('/member/{user}', [Controllers\ProfilesController::class, 'update'])->name('profile.update');
 
+//Notifications
+Route::get('/notifications', Controllers\NotificationsController::class);
