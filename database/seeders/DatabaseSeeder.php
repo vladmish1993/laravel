@@ -22,12 +22,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         //Create User with Profile and profile skills
-        User::factory(2)->has(
+        User::factory(5)->has(
             Profile::factory(1)->has(
                 ProfileSkills::factory(3)
             ))->create();
 
         //Create Job with skills
-        Job::factory(50)->hasJobSkill(3)->create();
+        Job::factory(10)->hasJobSkill(3)->create();
     }
 }
