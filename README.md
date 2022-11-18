@@ -20,7 +20,11 @@ https://prnt.sc/YU_4YChtbyhg
 
 ### For employer   
 The employer can create a new jobs,  
-Track the employee's applications, approve or decline them with feedback comment. (In progress)  
+Track the employee's applications, approve or decline them with feedback comment.  
+Buttons available for employer to accept or decline application from user https://prnt.sc/jAF9iyPNkV7m  
+He can write a comment https://prnt.sc/lxeJ4kLuurYO  
+Also i added the application status to the employee dashboard https://prnt.sc/IPpI5CP3rP18  
+And notification functionality to notify user, if some from his application was getting a feedback https://prnt.sc/kLAo8PsQganb
 
 Main page: 
 https://prnt.sc/pcbM5oyPQQhE  
@@ -34,12 +38,14 @@ Adding a new job. It is possible to specify the Title, salary, job description, 
 https://prnt.sc/9pNrbVswQdzO  
 https://prnt.sc/UzQNMBs7HqPR
 
+Also possible to edit and delete it https://prnt.sc/z7zUvnHqu2m5
 ___
 
-A factories and DB seeder has been developed to generate users with skills and jobs:  
+- A factories and DB seeder has been developed to generate users with skills and jobs:  
 php artisan db:seed
+- To download the CV, I created a symbolic link to the storage/app/public/profile folder.  
+- When job is deleting, related entities (job skills, applications) also deleting.  
 
-To download the CV, I created a symbolic link to the storage/app/public/profile folder  
 Controllers - app/Http/Controllers  
 Models - app/Models  
 Policies (for protect creating jobs from non-employer users) - app/Policies
